@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Calendar Counter</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style>
+		body {
+			margin-top: 100px;
+		}
+	</style>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -15,6 +20,18 @@
       </div>
     </div>
   </nav>
+
+  <main>
+  	<div class="container">
+  		<form class="form-inline">
+	  		<label for="start-date">Start date</label>
+				<input type="date" class="form-control">
+	  		<label for="days">Days to count</label>
+				<input type="number" class="form-control" value="0">
+				<button class="btn btn-primary">Show</button>
+  		</form>
+  	</div>
+  </main>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
