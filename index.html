@@ -10,6 +10,9 @@
 		body {
 			margin-top: 100px;
 		}
+		input.error {
+			background-color: #faa;
+		}
 	</style>
 </head>
 <body>
@@ -23,17 +26,43 @@
 
   <main>
   	<div class="container">
-  		<form class="form-inline">
-	  		<label for="start-date">Start date</label>
-				<input type="date" class="form-control">
-	  		<label for="days">Days to count</label>
-				<input type="number" class="form-control" value="0">
-				<button class="btn btn-primary">Show</button>
+  		<form class="form-inline" id="main-form">
+	  		<label for="start-date">Start Date</label>
+				<input type="text" class="form-control start-date" placeholder="mm/dd/yyyy" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
+	  		
+	  		<label for="days">Number of days</label>
+				<input type="number" class="form-control days" value="0" required>
+
+	  		<label for="country-code">Country Code</label>
+				<input type="text" class="form-control country-code" value="US" pattern="[A-Z]{2}" required>
+
+				<button class="btn btn-primary show-btn">Show</button>
   		</form>
   	</div>
   </main>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+	<script>
+		$('#main-form').on('submit', function(e) {
+			e.preventDefault();
+			var startDate = $('.start-date').val().split('/');
+			var m = 1 * startDate[0];
+			var d = 1 * startDate[1];
+			var y = 1 * startDate[2];
+			if ( !moment([y, m-1, d]).isValid() ) {
+				$('.start-date').addClass('error');
+				return false;
+			}
+			$('.start-date').removeClass('error');
+			var countryCode = $('.country-code').val();
+			console.log(new Date(y, m - 1, d));
+
+			var days = 1 * $('.days').val();
+			console.log(startDate, m, d, y, days, countryCode);
+		});
+	</script>
 </body>
 </html>
