@@ -13,6 +13,25 @@
 		input.error {
 			background-color: #faa;
 		}
+		.calendar-month th {
+			width: 2em;
+			height: 2em;
+			line-height: 2em;
+			background: #fff;
+			border: 1px solid white;
+			text-align: center;
+		}
+		.calendar-month .title {
+			background-color: #afa;
+		}
+		.calendar-month td {
+			width: 2em;
+			height: 2em;
+			line-height: 2em;
+			background: #ccc;
+			border: 1px solid white;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -38,6 +57,30 @@
 
 				<button class="btn btn-primary show-btn">Show</button>
   		</form>
+
+  		<table class="calendar-month">
+  			<tr>
+  				<th>S</th>
+  				<th>M</th>
+  				<th>T</th>
+  				<th>W</th>
+  				<th>T</th>
+  				<th>F</th>
+  				<th>S</th>
+  			</tr>
+  			<tr>
+  				<th class="title" colspan="7">Jan 2008</th>
+  			</tr>
+  			<tr>
+  				<td></td>
+  				<td></td>
+  				<td></td>
+  				<td></td>
+  				<td></td>
+  				<td></td>
+  				<td></td>
+  			</tr>
+  		</table>
   	</div>
   </main>
 
@@ -48,20 +91,34 @@
 	<script>
 		$('#main-form').on('submit', function(e) {
 			e.preventDefault();
-			var startDate = $('.start-date').val().split('/');
-			var m = 1 * startDate[0];
-			var d = 1 * startDate[1];
-			var y = 1 * startDate[2];
-			if ( !moment([y, m-1, d]).isValid() ) {
+			var startDateInput = $('.start-date').val().split('/');
+			var m = 1 * startDateInput[0];
+			var d = 1 * startDateInput[1];
+			var y = 1 * startDateInput[2];
+			var startDate = moment([y, m-1, d]);
+			if ( !startDate.isValid() ) {
 				$('.start-date').addClass('error');
 				return false;
 			}
 			$('.start-date').removeClass('error');
+			
 			var countryCode = $('.country-code').val();
 			console.log(new Date(y, m - 1, d));
 
 			var days = 1 * $('.days').val();
-			console.log(startDate, m, d, y, days, countryCode);
+			console.log(startDate.format('MM/DD/YYYY'), m, d, y, days, countryCode);
+
+			var dates = [];
+			var i = 0;
+			var date = startDate.clone().startOf('week');
+			while (i < days) {
+				dates.push(date.format('DD'));
+				console.log(dates, date.format('MM/DD/YYYY'), startDate.format('MM/DD/YYYY'));
+				date.add(1, 'days');
+				if ( date.isAfter(startDate) ) {
+					i++;
+				}
+			}
 		});
 	</script>
 </body>
